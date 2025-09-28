@@ -15,9 +15,14 @@ public class InteractableItem : MonoBehaviour, IInteractable
     private void Awake()
     {
         itemImage.sprite = ItemData.ItemSprite;
+        
         if (itemsFunctionality == null)
         {
             Debug.LogError("ItemsFunctionality is null");
+        }
+        else
+        {
+            itemsFunctionality.ItemData = ItemData;
         }
     }
 
@@ -44,7 +49,6 @@ public class InteractableItem : MonoBehaviour, IInteractable
         }
            
     }
-
     public string GetTooltip() => ItemData.TooltipText;
     public Sprite GetIcon() => ItemData.ItemSprite;
 }

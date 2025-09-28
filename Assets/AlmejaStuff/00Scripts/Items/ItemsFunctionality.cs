@@ -5,6 +5,7 @@ using DG.Tweening;
 public class ItemsFunctionality : MonoBehaviour
 {
     #region Variables
+    public ItemData ItemData { get; set;}
     
     [Header("AnimationStuff")]
     [SerializeField] private float scaleTo;
@@ -27,7 +28,7 @@ public class ItemsFunctionality : MonoBehaviour
         if (_isDragging && Input.GetMouseButtonUp(0))
         {
             _isDragging = false;
-            transform.position = _originalPos;
+            DropMeHere();
         }
     }
     
@@ -48,6 +49,7 @@ public class ItemsFunctionality : MonoBehaviour
     }
     #endregion
     
+    #region PrivateMethods
     private void AnimateMe()
     {
         _screanCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
@@ -74,8 +76,44 @@ public class ItemsFunctionality : MonoBehaviour
     }
     private void DropMeHere()
     {
-        //Evento a llamar
-        ItemOnActionEvent?.Invoke(this);
+        Collider2D myCollider = GetComponent<Collider2D>();
+        if (myCollider != null) myCollider.enabled = false;
+
+        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero);
+        
+        if (hit.collider != null)
+        {
+            string tag = hit.collider.tag;
+
+            InteractionZone zone = hit.collider.GetComponent<InteractionZone>();
+            if (zone != null && zone.ValidateItem(ItemData))
+            {
+                zone.ActivateZone();
+                Debug.Log($"🎯 Item válido: {ItemData.ItemName}");
+                AnimateMe();
+            }
+            else if (tag == "Inventory")
+            {
+                transform.SetParent(hit.collider.transform);
+                transform.position = hit.collider.bounds.center;
+                Debug.Log($"📦 Drop en inventario: {hit.collider.name}");
+            }
+            else
+            {
+                Debug.Log($"🚫 Drop en zona no válida: {hit.collider.name}");
+                transform.position = _originalPos;
+            }
+        }
+        else
+        {
+            Debug.Log("🚫 No se detectó ninguna zona al soltar");
+            transform.position = _originalPos;
+        }
+        if (myCollider != null) myCollider.enabled = true;
     }
+    #endregion
+    
+    
     
 }
