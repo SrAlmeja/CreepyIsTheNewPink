@@ -72,5 +72,10 @@ public class ItemsFunctionality : MonoBehaviour
         gameObject.transform.position = mouseWorldPos;
 
     }
+    private void DropMeHere()
+    {
+        //Evento a llamar
+        ItemOnActionEvent?.Invoke(this);
+    }
     
 }
