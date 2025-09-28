@@ -1,9 +1,15 @@
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class InteractionZone : MonoBehaviour
 {
     [Header("Item requerido")]
     [SerializeField] private ItemData requiredItem;
+    
+    [Header("Eventos")]
+    public UnityEvent OnZoneActivated;
+
 
     public bool ValidateItem(ItemData incomingItem)
     {
@@ -13,7 +19,8 @@ public class InteractionZone : MonoBehaviour
     public void ActivateZone()
     {
         Debug.Log($"✅ Zona activada por: {requiredItem.ItemName}");
-        // Aquí puedes disparar efectos, diálogos, misiones, etc.
+        OnZoneActivated?.Invoke();
+
     }
 }
 
