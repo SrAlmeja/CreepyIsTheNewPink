@@ -23,7 +23,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 5058
+  controlID: 8530
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 5059
+  controlID: 8531
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -933,7 +933,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 5006
+  controlID: 8580
   draggingID: 0
 --- !u!114 &9
 MonoBehaviour:
@@ -954,8 +954,8 @@ MonoBehaviour:
     y: 0
     width: 558
     height: 513
-  m_MinSize: {x: 202, y: 226}
-  m_MaxSize: {x: 4002, y: 4026}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 10}
   m_Panes:
   - {fileID: 10}
@@ -1174,8 +1174,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 0cb50000
-    m_LastClickedInstanceID: 46348
+    m_SelectedInstanceIDs: feb40000
+    m_LastClickedInstanceID: 46334
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000b21d0100ac1f0100000000002e660000f29c00007077000036740000be740000
     m_RenameOverlay:
@@ -1276,7 +1276,7 @@ MonoBehaviour:
     m_CachedPref: 353
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: 46348
+  m_LastInspectedObjectInstanceID: 46334
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0

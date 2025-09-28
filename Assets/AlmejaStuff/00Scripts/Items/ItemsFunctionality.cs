@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using DG.Tweening;
+
 public class ItemsFunctionality : MonoBehaviour
 {
     #region Variables
@@ -11,9 +12,43 @@ public class ItemsFunctionality : MonoBehaviour
     
     private Vector3 _screanCenter, _wolrdCenter;
     private Sequence _collectSequence;
+    
+    private bool _isDragging;
+    private Vector3 _originalPos;
     #endregion
 
+    private void Update()
+    {
+        if (_isDragging && Input.GetMouseButton(0))
+        {
+            DragMe();
+        }
+
+        if (_isDragging && Input.GetMouseButtonUp(0))
+        {
+            _isDragging = false;
+            transform.position = _originalPos;
+        }
+    }
+    
+    #region PublicMethods
     public void Collect()
+    {
+        AnimateMe();
+    }
+    public void Draggable()
+    {
+        _originalPos = transform.position;
+        _isDragging = true;
+        Debug.Log($"🖐️ Arrastrando: {gameObject.name}");
+    }
+    public void TriggerAction()
+    {
+        ItemOnActionEvent?.Invoke(this);
+    }
+    #endregion
+    
+    private void AnimateMe()
     {
         _screanCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
         _wolrdCenter = Camera.main.ScreenToWorldPoint(_screanCenter);
@@ -30,16 +65,12 @@ public class ItemsFunctionality : MonoBehaviour
             gameObject.SetActive(false);
         });
     }
-    
-    public void Draggable()
+    private void DragMe()
     {
-        Debug.Log($"🖐️ Arrastrando: {gameObject.name}");
-    }
-    
-    public void TriggerAction()
-    {
-        ItemOnActionEvent?.Invoke(this);
-    }
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPos.z = transform.position.z;
+        gameObject.transform.position = mouseWorldPos;
 
+    }
     
 }
