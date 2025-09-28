@@ -1,9 +1,13 @@
+using System;
 using UnityEngine;
 using DG.Tweening;
 public class ItemsFunctionality : MonoBehaviour
 {
     #region Variables
-    [HideInInspector] public bool IsCollectable, IsDraggable, HasATriggerAction;
+    
+    [Header("AnimationStuff")]
+    [SerializeField] private float scaleTo;
+    public static event Action<ItemsFunctionality> ItemOnActionEvent;
     
     private Vector3 _screanCenter, _wolrdCenter;
     private Sequence _collectSequence;
@@ -18,15 +22,13 @@ public class ItemsFunctionality : MonoBehaviour
         _collectSequence = DOTween.Sequence();
         
         _collectSequence.Append(transform.DOMove(_wolrdCenter, 0.5f).SetEase(Ease.OutQuad));
-        _collectSequence.Join(transform.DOScale(+0.5f, 0.5f).SetEase(Ease.OutQuad));
+        _collectSequence.Join(transform.DOScale(scaleTo, 0.5f).SetEase(Ease.OutQuad));
         _collectSequence.AppendInterval(1f);
         _collectSequence.OnComplete(() =>
         {
             Debug.Log($"📦 Recogido y ocultado: {gameObject.name}");
             gameObject.SetActive(false);
         });
-
-
     }
     
     public void Draggable()
@@ -36,6 +38,8 @@ public class ItemsFunctionality : MonoBehaviour
     
     public void TriggerAction()
     {
-        Debug.Log($"⚙️ Acción disparada por: {gameObject.name}");
+        ItemOnActionEvent?.Invoke(this);
     }
+
+    
 }
