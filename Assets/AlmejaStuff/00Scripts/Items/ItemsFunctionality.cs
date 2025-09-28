@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using DG.Tweening;
 
 public class ItemsFunctionality : MonoBehaviour
@@ -36,6 +37,7 @@ public class ItemsFunctionality : MonoBehaviour
     public void Collect()
     {
         AnimateMe();
+        ItemOnActionEvent?.Invoke(this);
     }
     public void Draggable()
     {
