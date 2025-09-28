@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: ACuasaa
   ItemSprite: {fileID: -6777025305268131631, guid: 0a26cbe0e196ea44ebc48e36fc1052cb, type: 3}
-  IsCollectible: 0
+  IsCollectable: 0
   IsDraggable: 0
-  TriggersAction: 1
+  TriggerAction: 1
   InteractionSound: {fileID: 0}
-  TooltipText: 
+  TooltipText: I Want to Eat a Croasant
+  CurrentInteractionType: 3

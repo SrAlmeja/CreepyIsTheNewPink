@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: FoodBag
   ItemSprite: {fileID: 8766740682603709380, guid: e3d83309f5b56144993c4a41d58adfc2, type: 3}
-  IsCollectible: 0
-  IsDraggable: 1
-  TriggersAction: 0
+  IsCollectable: 0
+  IsDraggable: 0
+  TriggerAction: 0
   InteractionSound: {fileID: 0}
-  TooltipText: 
+  TooltipText: a bag
+  CurrentInteractionType: 0

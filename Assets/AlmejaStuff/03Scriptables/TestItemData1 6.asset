@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Fruits
   ItemSprite: {fileID: 4884007723737282446, guid: 019cc7c3323ac3c4c8e6f5e3ca9c30ed, type: 3}
-  IsCollectible: 0
+  IsCollectable: 0
   IsDraggable: 0
-  TriggersAction: 1
+  TriggerAction: 0
   InteractionSound: {fileID: 0}
-  TooltipText: 
+  TooltipText: blueberrys!
+  CurrentInteractionType: 0

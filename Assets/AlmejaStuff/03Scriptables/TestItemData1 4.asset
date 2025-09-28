@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Banana
   ItemSprite: {fileID: -9182177788924653191, guid: a8713287c1d77c34a9e32926bebc0097, type: 3}
-  IsCollectible: 0
+  IsCollectable: 0
   IsDraggable: 1
-  TriggersAction: 0
+  TriggerAction: 0
   InteractionSound: {fileID: 0}
-  TooltipText: 
+  TooltipText: a banana
+  CurrentInteractionType: 2

@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: ABaguette
   ItemSprite: {fileID: 7877887828059408297, guid: 328a6f358e49f494eafe7d3f362c568c, type: 3}
-  IsCollectible: 0
+  IsCollectable: 0
   IsDraggable: 0
-  TriggersAction: 1
+  TriggerAction: 0
   InteractionSound: {fileID: 0}
-  TooltipText: 
+  TooltipText: A Bread
+  CurrentInteractionType: 0

@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: antler
   ItemSprite: {fileID: 503087893959978718, guid: a470ed8df974b574daabefe02ee78e4a, type: 3}
-  IsCollectible: 1
+  IsCollectable: 0
   IsDraggable: 0
-  TriggersAction: 0
+  TriggerAction: 0
   InteractionSound: {fileID: 0}
   TooltipText: its something...
+  CurrentInteractionType: 1

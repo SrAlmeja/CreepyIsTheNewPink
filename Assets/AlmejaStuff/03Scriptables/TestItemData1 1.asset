@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: RedApple
   ItemSprite: {fileID: 4978424162507891905, guid: 2b48273b1ede2ae4fa560a6d67f68de1, type: 3}
-  IsCollectible: 1
+  IsCollectable: 1
   IsDraggable: 0
-  TriggersAction: 0
+  TriggerAction: 0
   InteractionSound: {fileID: 0}
-  TooltipText: 
+  TooltipText: an apple
+  CurrentInteractionType: 1

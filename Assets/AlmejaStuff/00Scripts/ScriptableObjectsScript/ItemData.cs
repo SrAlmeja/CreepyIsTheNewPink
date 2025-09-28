@@ -1,6 +1,14 @@
 using UnityEditor;
 using UnityEngine;
 
+public enum InteractionType
+{
+    None,
+    Collectable,
+    Draggable,
+    TriggerAction,
+}
+
 [CreateAssetMenu(fileName = "ItemData", menuName = "SrAlmejaSOs/ItemData")]
 public class ItemData : ScriptableObject
 {
@@ -8,16 +16,22 @@ public class ItemData : ScriptableObject
     public string ItemName;
     [PreviewSprite]
     public Sprite ItemSprite;
-
-    [Header("Interacción")]
-    public bool IsCollectible;
-    public bool IsDraggable;
-    public bool TriggersAction;
+    
+    [HideInInspector] public bool IsCollectable;
+    [HideInInspector] public bool IsDraggable;
+    [HideInInspector] public bool TriggerAction;
 
     [Header("Extras")]
     public AudioClip InteractionSound;
     public string TooltipText;
+    public string ItemID => $"{ItemName}_{ItemName.GetHashCode()}"; // ID generado automáticamente
+    public InteractionType CurrentInteractionType;
 
-    // ID generado automáticamente
-    public string ItemID => $"{ItemName}_{ItemName.GetHashCode()}";
+    public void SetInteractionType(InteractionType type)
+    {
+        CurrentInteractionType = type;
+        IsCollectable = type == InteractionType.Collectable;
+        IsDraggable = type == InteractionType.Draggable;
+        TriggerAction = type == InteractionType.TriggerAction;
+    }
 }

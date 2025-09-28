@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Rock Block
   ItemSprite: {fileID: 5865670524570963042, guid: 8a94eae80a23b684390b444d3cd95ac4, type: 3}
-  IsCollectible: 0
-  IsDraggable: 1
-  TriggersAction: 0
+  IsCollectable: 0
+  IsDraggable: 0
+  TriggerAction: 0
   InteractionSound: {fileID: 0}
-  TooltipText: 
+  TooltipText: perfectr to build?
+  CurrentInteractionType: 0

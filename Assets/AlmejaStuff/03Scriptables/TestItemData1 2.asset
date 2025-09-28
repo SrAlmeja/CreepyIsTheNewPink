@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: GreenApple
   ItemSprite: {fileID: 1161488873043119445, guid: 3c5c364328ef0ed43b258397601bb892, type: 3}
-  IsCollectible: 1
+  IsCollectable: 0
   IsDraggable: 0
-  TriggersAction: 0
+  TriggerAction: 0
   InteractionSound: {fileID: 0}
-  TooltipText: 
+  TooltipText: an apple too
+  CurrentInteractionType: 0
