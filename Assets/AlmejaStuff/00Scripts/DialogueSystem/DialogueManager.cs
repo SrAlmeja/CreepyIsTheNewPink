@@ -3,6 +3,7 @@ using Ink.Runtime;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.Events;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -13,13 +14,21 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private Transform choicesContainer;
     [SerializeField] private Button choiceButtonPrefab;
+    [Header("Conditional")]
+    [SerializeField] private GameObject losePanel;
     
     [Header("InvokeAudios")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private List<AudioClip> audioClips;
     
+    [Header("Scene Flow")]
+    [SerializeField] public UnityEvent onGameFinished;
+
+    
     private Story story;
 
+    private string lastCheckpoint = "start"; // Valor por defecto
+    
     void OnEnable()
     {
         GameEvents.OnPlayerDeath += HandleDeath;
@@ -35,6 +44,9 @@ public class DialogueManager : MonoBehaviour
     
     void Start()
     {
+        PlayerPrefs.DeleteKey("LastCheckpoint");
+        PlayerPrefs.Save();
+
         if (inkJSON == null)
         {
             Debug.LogError("❌ inkJSON no está asignado.");
@@ -42,31 +54,31 @@ public class DialogueManager : MonoBehaviour
         }
 
         story = new Story(inkJSON.text);
-        RefreshView();
+
+        // Cargar checkpoint guardado si existe
+        string savedCheckpoint = PlayerPrefs.GetString("LastCheckpoint", lastCheckpoint);
+        story.ChoosePathString(savedCheckpoint);
+
+        AdvanceStory();
     }
 
-    void RefreshView()
+    public void AdvanceStory()
     {
-        if (dialogueText == null || story == null) return;
+        if (story == null || dialogueText == null) return;
 
         ClearChoices();
 
-        string fullText = "";
-
-        while (story.canContinue)
+        if (story.canContinue)
         {
-            fullText += story.Continue();
-            fullText += "\n"; // Opcional: separador entre líneas
+            string nextLine = story.Continue();
+            dialogueText.text = nextLine;
+
+            foreach (string tag in story.currentTags)
+            {
+                HandleTag(tag);
+            }
         }
-
-        dialogueText.text = fullText;
-
-        foreach (string tag in story.currentTags)
-        {
-            HandleTag(tag); // Si usas tags como #victory o #play:audio
-        }
-
-        if (story.currentChoices.Count > 0)
+        else if (story.currentChoices.Count > 0)
         {
             foreach (Choice choice in story.currentChoices)
             {
@@ -77,16 +89,17 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+
     public void LoadStory(TextAsset newInkJSON)
     {
         inkJSON = newInkJSON;
         story = new Story(inkJSON.text);
-        RefreshView();
+        AdvanceStory();
     }
     void OnChoiceSelected(Choice choice)
     {
         story.ChooseChoiceIndex(choice.index);
-        RefreshView();
+        AdvanceStory();
     }
 
     void ClearChoices()
@@ -99,14 +112,21 @@ public class DialogueManager : MonoBehaviour
     
     void HandleTag(string tag)
     {
-        if (tag == "death")
+        if (tag.StartsWith("checkpoint:"))
         {
-            Debug.Log("💀 Muerte detectada desde Ink");
-            GameEvents.TriggerDeath();
+            lastCheckpoint = tag.Substring("checkpoint:".Length);
+            PlayerPrefs.SetString("LastCheckpoint", lastCheckpoint);
+            PlayerPrefs.Save();
+            Debug.Log($"📍 Checkpoint guardado: {lastCheckpoint}");
+        }
+        else if (tag == "death")
+        {
+            Debug.Log("💀 Muerte detectada. Mostrando panel de derrota.");
+            losePanel.SetActive(true); // No reinicia automáticamente
         }
         else if (tag == "victory")
         {
-            Debug.Log("🏆 Victoria detectada desde Ink");
+            Debug.Log("🏆 Victoria detectada.");
             GameEvents.TriggerVictory();
         }
         else if (tag.StartsWith("play:"))
@@ -123,22 +143,27 @@ public class DialogueManager : MonoBehaviour
                 Debug.LogWarning($"⚠️ Clip no encontrado: {clipName}");
             }
         }
-        else
-        {
-            Debug.Log($"📎 Tag desconocido: {tag}");
-        }
     }
-    
+
+    public void TryAgain()
+    {
+        Debug.Log($"🔁 Reiniciando desde checkpoint: {lastCheckpoint}");
+        story = new Story(inkJSON.text);
+        story.ChoosePathString(lastCheckpoint);
+        losePanel.SetActive(false);
+        AdvanceStory();
+    }
+
     void HandleDeath()
     {
-        Debug.Log("💀 El jugador ha muerto. Mostrar pantalla de derrota.");
-        // Aquí puedes cargar escena, mostrar UI, etc.
+        losePanel.SetActive(true);
     }
+
 
     void HandleVictory()
     {
-        Debug.Log("🏆 El jugador ha ganado. Mostrar pantalla de victoria.");
-        // Aquí puedes guardar progreso, cambiar escena, etc.
+        Debug.Log("🏆 El jugador ha ganado. Ejecutando evento de final.");
+        onGameFinished?.Invoke();
     }
 
 
