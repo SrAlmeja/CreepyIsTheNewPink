@@ -12,7 +12,7 @@ public class InteractionSystem : MonoBehaviour
         if (hit.collider != null)
         {
             Debug.Log($"raycast hit: {hit.collider.name}");
-            cursor.SetInteractionCursor();
+            //cursor.SetInteractionCursor();
         }
         else
         {

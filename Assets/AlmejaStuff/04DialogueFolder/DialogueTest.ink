@@ -20,4 +20,28 @@ Con la linterna encendida, ves una llave en el suelo.
 
 === puerta_abierta ===
 Usas la llave para abrir la puerta. Has salido.
+Estas en un bosque oscuro, la linterna se apaga
+
++ Regresas a la mazmorra?
+    regresaste 
+    -> Final_Malo
+    
++ Corres en Linea recta
+    Corres en linea recta por la oscuridad del bosque
+    -> Final_Bueno
+    
+    ===Final_Malo===
+La criatura te devora. Has muerto.
+#death
+-> END
+
+=== Final_Bueno ===
+Has escapado con el tesoro.
+#victory
+-> END
+
+Encuentras una puerta secreta.
+#play:puerta
+
+
 -> END
